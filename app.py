@@ -9,9 +9,7 @@ with open(filename,'rb') as file:
         model = pickle.load(file)
 
 def Prediction(list):
-    filename="./predictor.pickle"
-    with open(filename,'rb') as file:
-        model = pickle.load(file)
+
     Prediction = model.predict([list])
     return Prediction
 
@@ -19,29 +17,23 @@ def Prediction(list):
 def index():
     pred = "Diabetes Checker"
     if request.method =='POST':
+    
+        Pregnancies = int(request.form['pregnancies'])
+        Glucose = int(request.form['glucose'])
+        BloodPressure = int(request.form['bloodPressure'])
+        SkinThickness = float(request.form['skinThickness'])
+        Insulin = float(request.form['insulin'])
+        BMI = float(request.form['bmi'])
+        DiabetesPedigreeFunction = float(request.form['diabetesPedigreeFunction'])
+        Age = int(request.form['age'])
 
-        Pregnancies = request.form['pregnancies'] 
-        Glucose	= request.form['glucose'] 
-        BloodPressure =	request.form['bloodPressure'] 
-        SkinThickness =	request.form['skinThickness'] 
-        Insulin =	request.form['insulin'] 
-        BMI =	request.form['bmi'] 
-        DiabetesPedigreeFunction =	request.form['diabetesPedigreeFunction'] 
-        Age = request.form['age'] 
-        lst = []
-        lst.append(int(Pregnancies))
-        lst.append(int(Glucose))
-        lst.append(int(BloodPressure))
-        lst.append(float(SkinThickness))
-        lst.append(float(Insulin))
-        lst.append(float(BMI))
-        lst.append(float(DiabetesPedigreeFunction))
-        lst.append(int(Age))
-        
+
+        lst = [Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]
+       
         pred = Prediction(lst)
-        if pred ==0:
+        if pred == 0:
             pred = "Luckily Patient has not Diabetes"
-        elif pred ==1 :
+        elif pred == 1 :
             pred = "Unfortunately Patient has Diabetes"
 
     return render_template("index.html",pred= pred)
@@ -50,11 +42,13 @@ def index():
 @app.route('/prediction', methods =["POST"])
 
 def predict_api():
-    data = request.json['data']
+    data = request.get_json()
     new_data = np.array(list(data.values())).reshape(1,-1)
     out_put = model.predict(new_data)
     result = int(out_put[0])
-    return jsonify(result)
+    return jsonify({"Prediction":result})
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)                # Run the app in debug mode.
