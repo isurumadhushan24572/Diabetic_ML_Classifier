@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - DiabetesPredictor
+name: Build and deploy Python app to Azure Web App - Diabetic
 
 on:
   push:
@@ -68,14 +68,14 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_40D649537163445A88FB2C26AE4DD79A }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A51F7866CDBC40AA8F34AB4B9B3549A9 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A2D99B7C5EAE424797447FA7CD4F07DE }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_1B0D167B18B84D1BB27CD618E42D91D9 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_07B47280278C465A9E1C3A787E106080 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_AFA419E2A6EA41E681CD2C9D3DBC31E9 }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'DiabetesPredictor'
+          app-name: 'Diabetic'
           slot-name: 'Production'
           
